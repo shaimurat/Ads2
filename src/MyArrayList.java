@@ -1,35 +1,42 @@
+
 import java.util.Iterator;
 
-public class ArrayList<T extends Comparable<T>> implements MyList<T> {
+public class MyArrayList<T extends Comparable<T>> implements MyList<T> {
     private Object[] array;
     private int length = 0;
     private static final int DEF_CAPACITY = 10;
-    public ArrayList(int initCap){
-        if(initCap<0){
+
+    public MyArrayList(int initCap) {
+        if (initCap < 0) {
             throw new IllegalArgumentException("Less than 0");
         }
         array = new Object[initCap];
     }
-    public ArrayList(){
+
+    public MyArrayList() {
         this(DEF_CAPACITY);
     }
-    public void increaseCapacity(){
-        Object[] array2 = new Object[array.length*2];
-        for(int i = 0; i < length; i++){
+
+    public void increaseCapacity() {
+        Object[] array2 = new Object[array.length * 2];
+        for (int i = 0; i < length; i++) {
             array2[i] = array[i];
         }
         array = array2;
     }
-    public void index_check(int ind){
-        if(ind>array.length || ind < 0){
+
+    public void index_check(int ind) {
+        if (ind > array.length || ind < 0) {
             throw new IndexOutOfBoundsException("Index out of bound");
         }
     }
-    public void capacity_check(){
-        if(array.length<length+1){
+
+    public void capacity_check() {
+        if (array.length < length + 1) {
             increaseCapacity();
         }
     }
+
     @Override
     public void add(T item) {
         capacity_check();
@@ -38,7 +45,8 @@ public class ArrayList<T extends Comparable<T>> implements MyList<T> {
 
     @Override
     public void set(int index, T item) {
-
+        index_check(index);
+        array[index] = item;
     }
 
     @Override
@@ -47,10 +55,9 @@ public class ArrayList<T extends Comparable<T>> implements MyList<T> {
         capacity_check();
         Object[] array2 = new Object[array.length];
         int arr1ind = 0;
-        for (int i =0;i<length++;i++){
-            if (i == index){
+        for (int i = 0; i < ++length; i++) {
+            if (i == index) {
                 array2[i] = item;
-                i++;
                 continue;
             }
             array2[i] = array[arr1ind];
@@ -61,16 +68,17 @@ public class ArrayList<T extends Comparable<T>> implements MyList<T> {
 
     @Override
     public void AddFirst(T item) {
-        Object[] array2 = new Object[array.length];
+        add(0, item);
     }
 
     @Override
     public void AddLast(T item) {
-
+        add(item);
     }
 
     @Override
     public T get(int index) {
+        index_check(index);
         return (T) array[index];
     }
 
@@ -81,28 +89,49 @@ public class ArrayList<T extends Comparable<T>> implements MyList<T> {
 
     @Override
     public T getLast() {
-        return (T) array[length-1];
+        return (T) array[length - 1];
     }
 
     @Override
     public void remove(int index) {
-
+        index_check(index);
+        Object[] array2 = new Object[array.length];
+        int arr1ind = 0;
+        for (int i = 0; i < length; i++) {
+            if (i == index) {
+                array2[i] = array[++arr1ind];
+                continue;
+            }
+            array2[i] = array[i];
+            arr1ind++;
+        }
+        array = array2;
+        length--;
     }
 
     @Override
     public void removeFirst() {
-
+        remove(0);
     }
 
     @Override
     public void removeLast() {
-
+        remove(length - 1);
     }
 
     @Override
-    public void sort(){
-
+    public void sort() {
+        for (int i = 0; i < length; i++) {
+            for (int j = i + 1; j < length - 1 - i; j++) {
+                if (array[i].compareTo) > 0) {
+                    Object save = array[j + 1];
+                    array[j + 1] = array[j];
+                    array[j] = save;
+                }
+            }
+        }
     }
+
 
     @Override
     public int indexOf(Object object) {
@@ -138,6 +167,7 @@ public class ArrayList<T extends Comparable<T>> implements MyList<T> {
     public Object[] toArray() {
         return new Object[0];
     }
+
     public void clear() {
         array = new Object[DEF_CAPACITY];
         length = 0;
@@ -147,10 +177,16 @@ public class ArrayList<T extends Comparable<T>> implements MyList<T> {
     public int size() {
         return length;
     }
-
     @Override
     public Iterator iterator() {
         return null;
     }
+    Collections.sort(books, new Comparator<Book>() {
+        @Override
+        public int compare(Book o1, Book o2) {
+            return o1.id.compareTo(o2.id);
+        }
+    });
 }
+
 
