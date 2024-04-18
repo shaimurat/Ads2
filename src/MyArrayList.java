@@ -123,7 +123,7 @@ public class MyArrayList<T extends Comparable<T>> implements MyList<T> {
     public void sort() {
         for (int i = 0; i < length; i++) {
             for (int j = i + 1; j < length - 1 - i; j++) {
-                if (array[i].compareTo) > 0) {
+                if (((Comparable)array[j]).compareTo(array[j+1]) > 0) {
                     Object save = array[j + 1];
                     array[j + 1] = array[j];
                     array[j] = save;
@@ -136,7 +136,7 @@ public class MyArrayList<T extends Comparable<T>> implements MyList<T> {
     @Override
     public int indexOf(Object object) {
         for (int i = 0; i < length; i++) {
-            if (object == array[i]) {
+            if (object.equals(array[i])) {
                 return i;
             }
         }
@@ -146,7 +146,7 @@ public class MyArrayList<T extends Comparable<T>> implements MyList<T> {
     @Override
     public int lastIndexOf(Object object) {
         for (int i = length; i >= 0; i--) {
-            if (object == array[i]) {
+            if (object.equals(array[i])) {
                 return i;
             }
         }
@@ -156,7 +156,7 @@ public class MyArrayList<T extends Comparable<T>> implements MyList<T> {
     @Override
     public boolean exists(Object object) {
         for (int i = 0; i < length; i++) {
-            if (object == array[i]) {
+            if (object.equals(array[i])) {
                 return true;
             }
         }
@@ -165,7 +165,11 @@ public class MyArrayList<T extends Comparable<T>> implements MyList<T> {
 
     @Override
     public Object[] toArray() {
-        return new Object[0];
+        Object[] toArr = new Object[length];
+        for (int i=0;i<length;i++){
+            toArr[i] = array[i];
+        }
+        return toArr;
     }
 
     public void clear() {
@@ -177,16 +181,26 @@ public class MyArrayList<T extends Comparable<T>> implements MyList<T> {
     public int size() {
         return length;
     }
+
     @Override
     public Iterator iterator() {
-        return null;
+        return new MyIterator();
     }
-    Collections.sort(books, new Comparator<Book>() {
+
+    public class MyIterator implements Iterator<T> {
+        private int index = 0;
+
         @Override
-        public int compare(Book o1, Book o2) {
-            return o1.id.compareTo(o2.id);
+        public boolean hasNext() {
+            return index < length;
         }
-    });
+
+        @Override
+        public T next() {
+            return (T) array[index++];
+        }
+    }
 }
+
 
 
