@@ -13,7 +13,7 @@ public class MyArrayList<T extends Comparable<T>> implements MyList<T> {
         array = new Object[initCap];
     }
 
-    public MyArrayList() { // creating arrayList with default capacity if init cap doesn't given
+    public MyArrayList() { // creating arrayList with default capacity if init cap not given
         this(DEF_CAPACITY);
     }
 
@@ -26,7 +26,7 @@ public class MyArrayList<T extends Comparable<T>> implements MyList<T> {
     }
 
     public void index_check(int ind) { //checks is index exists in arraylist
-        if (ind > array.length || ind < 0) {
+        if (ind > length || ind < 0) {
             throw new IndexOutOfBoundsException("Index out of bound");
         }
     }
