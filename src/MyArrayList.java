@@ -6,14 +6,14 @@ public class MyArrayList<T extends Comparable<T>> implements MyList<T> {
     private int length = 0;
     private static final int DEF_CAPACITY = 10;
 
-    public MyArrayList(int initCap) {
+    public MyArrayList(int initCap) { //Creating arrayList with given capacity
         if (initCap < 0) {
             throw new IllegalArgumentException("Less than 0");
         }
         array = new Object[initCap];
     }
 
-    public MyArrayList() {
+    public MyArrayList() { // creating arrayList with default capacity if init cap doesn't given
         this(DEF_CAPACITY);
     }
 
@@ -25,37 +25,37 @@ public class MyArrayList<T extends Comparable<T>> implements MyList<T> {
         array = array2;
     }
 
-    public void index_check(int ind) {
+    public void index_check(int ind) { //checks is index exists in arraylist
         if (ind > array.length || ind < 0) {
             throw new IndexOutOfBoundsException("Index out of bound");
         }
     }
 
-    public void capacity_check() {
+    public void capacity_check() { // Checks to see if capacity needs to be increased
         if (array.length < length + 1) {
             increaseCapacity();
         }
     }
 
     @Override
-    public void add(T item) {
+    public void add(T item) { //add an object to the arrayList
         capacity_check();
         array[length++] = item;
     }
 
     @Override
-    public void set(int index, T item) {
+    public void set(int index, T item) { //change an object in this index
         index_check(index);
         array[index] = item;
     }
 
     @Override
-    public void add(int index, T item) {
+    public void add(int index, T item) { //add object to this index
         index_check(index);
         capacity_check();
         Object[] array2 = new Object[array.length];
         int arr1ind = 0;
-        for (int i = 0; i < ++length; i++) {
+        for (int i = 0; i < length+1; i++) {
             if (i == index) {
                 array2[i] = item;
                 continue;
@@ -63,21 +63,22 @@ public class MyArrayList<T extends Comparable<T>> implements MyList<T> {
             array2[i] = array[arr1ind];
             arr1ind++;
         }
+        length++;
         array = array2;
     }
 
     @Override
     public void AddFirst(T item) {
         add(0, item);
-    }
+    }//add object to the zero index
 
     @Override
     public void AddLast(T item) {
         add(item);
-    }
+    }//add object to the last index
 
     @Override
-    public T get(int index) {
+    public T get(int index) {//get item in this index
         index_check(index);
         return (T) array[index];
     }
@@ -85,24 +86,25 @@ public class MyArrayList<T extends Comparable<T>> implements MyList<T> {
     @Override
     public T getFirst() {
         return (T) array[0];
-    }
+    }//get first object of the arrayList
 
     @Override
     public T getLast() {
         return (T) array[length - 1];
-    }
+    }//get last object of the arrayList
 
     @Override
-    public void remove(int index) {
+    public void remove(int index) {//remove object from this index
         index_check(index);
         Object[] array2 = new Object[array.length];
         int arr1ind = 0;
         for (int i = 0; i < length; i++) {
             if (i == index) {
                 array2[i] = array[++arr1ind];
+                arr1ind++;
                 continue;
             }
-            array2[i] = array[i];
+            array2[i] = array[arr1ind];
             arr1ind++;
         }
         array = array2;
@@ -112,21 +114,21 @@ public class MyArrayList<T extends Comparable<T>> implements MyList<T> {
     @Override
     public void removeFirst() {
         remove(0);
-    }
+    }//remove first object
 
     @Override
     public void removeLast() {
         remove(length - 1);
-    }
+    }//remove last object
 
     @Override
-    public void sort() {
+    public void sort() {//sorting arrayList in ascending order
         for (int i = 0; i < length; i++) {
-            for (int j = i + 1; j < length - 1 - i; j++) {
+            for (int j = i; j < length-1-i; j++) {
                 if (((Comparable)array[j]).compareTo(array[j+1]) > 0) {
-                    Object save = array[j + 1];
-                    array[j + 1] = array[j];
-                    array[j] = save;
+                    Object temp = array[j+1];
+                    array[j+1] = array[j];
+                    array[j] = temp;
                 }
             }
         }
@@ -134,7 +136,7 @@ public class MyArrayList<T extends Comparable<T>> implements MyList<T> {
 
 
     @Override
-    public int indexOf(Object object) {
+    public int indexOf(Object object) {//returns index of object
         for (int i = 0; i < length; i++) {
             if (object.equals(array[i])) {
                 return i;
@@ -144,7 +146,7 @@ public class MyArrayList<T extends Comparable<T>> implements MyList<T> {
     }
 
     @Override
-    public int lastIndexOf(Object object) {
+    public int lastIndexOf(Object object) { //returns last index of object
         for (int i = length; i >= 0; i--) {
             if (object.equals(array[i])) {
                 return i;
@@ -154,7 +156,7 @@ public class MyArrayList<T extends Comparable<T>> implements MyList<T> {
     }
 
     @Override
-    public boolean exists(Object object) {
+    public boolean exists(Object object) {//Checks if the object exists in the arrayList
         for (int i = 0; i < length; i++) {
             if (object.equals(array[i])) {
                 return true;
@@ -164,7 +166,7 @@ public class MyArrayList<T extends Comparable<T>> implements MyList<T> {
     }
 
     @Override
-    public Object[] toArray() {
+    public Object[] toArray() { //returns array that contains all object from list
         Object[] toArr = new Object[length];
         for (int i=0;i<length;i++){
             toArr[i] = array[i];
@@ -172,13 +174,13 @@ public class MyArrayList<T extends Comparable<T>> implements MyList<T> {
         return toArr;
     }
 
-    public void clear() {
+    public void clear() { //deleting all objects of the arrayList
         array = new Object[DEF_CAPACITY];
         length = 0;
     }
 
     @Override
-    public int size() {
+    public int size() { //returns size of arrayList
         return length;
     }
 
