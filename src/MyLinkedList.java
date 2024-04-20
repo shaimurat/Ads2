@@ -1,14 +1,17 @@
 import java.util.Iterator;
 
 public class MyLinkedList<T> implements MyList<T>{
-    MyNode<T> head;
-    MyNode<T> tail;
+    private MyNode<T> head;//start of node
+    private MyNode<T> tail;//end of node
     private int size = 0;
     private static class MyNode<E>{
-        E data;
-        MyNode<E> next;
+        E data;//data in node
+        MyNode<E> next;//moving to next node
+        MyNode<E> prev;//moving to previous node
         MyNode(E data){
-            this.data=data;
+            this.data = data;
+            this.next = null;
+            this.prev = null;
         }
     }
     public MyLinkedList(){
@@ -21,7 +24,7 @@ public class MyLinkedList<T> implements MyList<T>{
         }
     }
     @Override
-    public void add(T item) {
+    public void add(T item) {//adding items
         MyNode<T> newItem = new MyNode<>(item);
         if(head == null){
             head = tail = newItem;
@@ -34,18 +37,18 @@ public class MyLinkedList<T> implements MyList<T>{
     }
 
     @Override
-    public void set(int index, T item) {
+    public void set(int index, T item) {//changing item of node under this index
         indexCheck(index);
         MyNode<T> newItem = new MyNode<>(item);
         MyNode current = head;
         for(int i=0;i<index;i++){
             current = current.next;
         }
-        current.data = newItem;
+        current.data = newItem.data;
     }
 
     @Override
-    public void add(int index, T item) {
+    public void add(int index, T item) {//add item to this index
         indexCheck(index);
         MyNode<T> newItem = new MyNode<T>(item);
         if(index == 0){
@@ -70,15 +73,15 @@ public class MyLinkedList<T> implements MyList<T>{
     @Override
     public void AddFirst(T item) {
         add(0, item);
-    }
+    }//add item to the first ind
 
     @Override
     public void AddLast(T item) {
         add(size, item);
-    }
+    }//add item to last index
 
     @Override
-    public T get(int index) {
+    public T get(int index) {//get item under this index
         indexCheck(index);
         MyNode<T> current = head;
         for(int i = 0;i<index;i++){
@@ -98,7 +101,7 @@ public class MyLinkedList<T> implements MyList<T>{
     }
 
     @Override
-    public void remove(int index) {
+    public void remove(int index) {//removing items
         indexCheck(index);
         if (index == 0) {
             head = head.next;
@@ -109,30 +112,32 @@ public class MyLinkedList<T> implements MyList<T>{
             }
             tail = current;
             tail.next = null;
-        } else {
-            MyNode current = head;
+        }
+        else {
+            MyNode<T> current = head;
             for (int i = 0; i < index; i++) {
                 current = current.next;
             }
-            current = null;
+            current.prev.next = current.next;
+            current.next.prev = current.prev;
         }
         size--;
     }
     @Override
     public void removeFirst() {
         remove(0);
-    }
+    }//remove first item
 
     @Override
     public void removeLast() {
         remove(size-1);
-    }
+    }//remove last item
 
     @Override
-    public void sort() {
+    public void sort() {//sorting LinkedList in ascending order
             for (MyNode i = head; i != null; i = i.next) {
                 for (MyNode j = i; j != null; j = j.next) {
-                    if (((Comparable)j.data).compareTo(i.data) < 0) {
+                    if (((Comparable)i.data).compareTo(j.data) > 0) {
                         Object current = i.data;
                         i.data = j.data;
                         j.data = current;
@@ -142,7 +147,7 @@ public class MyLinkedList<T> implements MyList<T>{
         }
 
     @Override
-    public int indexOf(Object object) {
+    public int indexOf(Object object) {//returns index of this item
         MyNode current = head;
         int ind = 0;
         while (current.data != object){
@@ -153,7 +158,7 @@ public class MyLinkedList<T> implements MyList<T>{
     }
 
     @Override
-    public int lastIndexOf(Object object) {
+    public int lastIndexOf(Object object) {//return last index of object
         MyNode current = head;
         int ind = 0;
         int saveInd=-999;
@@ -168,7 +173,7 @@ public class MyLinkedList<T> implements MyList<T>{
     }
 
     @Override
-    public boolean exists(Object object) {
+    public boolean exists(Object object) {//returns true if object is in LinkedList
         MyNode current = head;
         while (current != null){
             if(current.data == object){
@@ -180,12 +185,18 @@ public class MyLinkedList<T> implements MyList<T>{
     }
 
     @Override
-    public Object[] toArray() {
-        return new Object[0];
+    public Object[] toArray() {//returns array of linked list
+        MyNode<T> current = head;
+        Object[] array = new Object[size];
+        for (int i=0;i<size;i++){
+            array[i] = current.data;
+            current = current.next;
+        }
+        return array;
     }
 
     @Override
-    public void clear() {
+    public void clear() {//deletes everything from linked list
         head = null;
         tail = null;
         size = 0;
@@ -194,7 +205,7 @@ public class MyLinkedList<T> implements MyList<T>{
     @Override
     public int size() {
         return size;
-    }
+    }//returns size of linked list
 
     @Override
     public Iterator<T> iterator() {
@@ -215,6 +226,5 @@ public class MyLinkedList<T> implements MyList<T>{
             current = current.next;
             return nextItem;
         }
-
     }
 }
