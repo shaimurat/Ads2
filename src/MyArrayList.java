@@ -17,7 +17,7 @@ public class MyArrayList<T extends Comparable<T>> implements MyList<T> {
         this(DEF_CAPACITY);
     }
 
-    public void increaseCapacity() {
+    private void increaseCapacity() {
         Object[] array2 = new Object[array.length * 2];
         for (int i = 0; i < length; i++) {
             array2[i] = array[i];
@@ -25,13 +25,13 @@ public class MyArrayList<T extends Comparable<T>> implements MyList<T> {
         array = array2;
     }
 
-    public void index_check(int ind) { //checks is index exists in arraylist
+    private void index_check(int ind) { //checks is index exists in arraylist
         if (ind > length || ind < 0) {
             throw new IndexOutOfBoundsException("Index out of bound");
         }
     }
 
-    public void capacity_check() { // Checks to see if capacity needs to be increased
+    private void capacity_check() { // Checks to see if capacity needs to be increased
         if (array.length < length + 1) {
             increaseCapacity();
         }
@@ -190,7 +190,7 @@ public class MyArrayList<T extends Comparable<T>> implements MyList<T> {
         return new MyIterator();
     }
 
-    public class MyIterator implements Iterator<T> {
+    private class MyIterator implements Iterator<T> {
         private int index = 0;
 
         @Override

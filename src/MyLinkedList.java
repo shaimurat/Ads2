@@ -66,7 +66,7 @@ public class MyLinkedList<T> implements MyList<T>{
         }
         else{
             MyNode<T> current = head;
-            for(int i=0;i<index;i++){
+            for(int i=0;i<index-1;i++){
                current = current.next;
             }
             newItem.next = current.next;
@@ -156,6 +156,9 @@ public class MyLinkedList<T> implements MyList<T>{
         MyNode current = head;
         int ind = 0;
         while (current.data != object){
+            if(ind == size - 1){
+                break;
+            }
             current = current.next;
             ind++;
         }
