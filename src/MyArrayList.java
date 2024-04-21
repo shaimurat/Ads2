@@ -74,7 +74,8 @@ public class MyArrayList<T extends Comparable<T>> implements MyList<T> {
 
     @Override
     public void AddLast(T item) {
-        add(item);
+        capacity_check();
+        array[length++] = item;
     }//add object to the last index
 
     @Override
@@ -118,7 +119,7 @@ public class MyArrayList<T extends Comparable<T>> implements MyList<T> {
 
     @Override
     public void removeLast() {
-        remove(length - 1);
+        array[--length] = null;
     }//remove last object
 
     @Override

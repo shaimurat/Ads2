@@ -13,6 +13,11 @@ public class MyLinkedList<T> implements MyList<T>{
             this.next = null;
             this.prev = null;
         }
+        MyNode(){
+            this.data = null;
+            this.next = null;
+            this.prev = null;
+        }
     }
     public MyLinkedList(){
         head = null;
@@ -114,7 +119,7 @@ public class MyLinkedList<T> implements MyList<T>{
             tail.next = null;
         }
         else {
-            MyNode<T> current = head;
+            MyNode current = head;
             for (int i = 0; i < index; i++) {
                 current = current.next;
             }
