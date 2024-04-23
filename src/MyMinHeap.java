@@ -35,20 +35,22 @@ public class MyMinHeap<T extends Comparable<T>>  {
         int rightChild = rightChildOf(ind);
         int i = ind;
         while(i != size()-1){
-            if(heap.get(rightChild)!=null){
+            if(heap.get(leftChild)!=null){
                 if(heap.get(leftChild).compareTo(heap.get(i)) > 0){
                     swap(i,leftChild);
                     i = leftChild;
-                    leftChild = leftChildOf(ind);
-                    rightChild = rightChildOf(ind);
+                    leftChild = leftChildOf(i);
+                    rightChild = rightChildOf(i);
+                    continue;
             }}
             else if(heap.get(rightChild)!=null) {
              if (heap.get(rightChild).compareTo(heap.get(i)) > 0) {
                 System.out.println(rightChild);
                 swap(i,rightChild);
                 i = rightChild;
-                leftChild = leftChildOf(ind);
-                rightChild = rightChildOf(ind);}
+                leftChild = leftChildOf(i);
+                rightChild = rightChildOf(i);}
+                continue;
             }
             i++;
         }
