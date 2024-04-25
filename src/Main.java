@@ -12,7 +12,7 @@ public class Main {
         heap.extractMin();
         heap.extractMin();
         heap.extractMin();
-        printArray(heap.heap);
+        System.out.println(heap.getMin());
     }
     public static void ArrayListCheck(){
         MyArrayList<Integer> arr = new MyArrayList<>();

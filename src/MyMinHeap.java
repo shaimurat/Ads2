@@ -1,6 +1,6 @@
 public class MyMinHeap<T extends Comparable<T>>  {
 
-    public MyArrayList<T> heap = new MyArrayList<>();
+    private MyArrayList<T> heap = new MyArrayList<>();
 
     public MyMinHeap() {
     }
@@ -48,7 +48,7 @@ public class MyMinHeap<T extends Comparable<T>>  {
             heapify(ind);
         }
     }
-    public void traverseUp(int ind) { // can perform traverseUp actions starting from position ‘index’
+    private void traverseUp(int ind) { // can perform traverseUp actions starting from position ‘index’
         if(ind == 0) {
             return;
         }
