@@ -1,6 +1,6 @@
 public class MyMinHeap<T extends Comparable<T>>  {
 
-    private MyArrayList<T> heap = new MyArrayList<>();
+    public MyArrayList<T> heap = new MyArrayList<>();
 
     public MyMinHeap() {
     }
@@ -26,61 +26,50 @@ public class MyMinHeap<T extends Comparable<T>>  {
     }
 
     public void insert(T item) { // Adds the element to the heap
-        heap.add(item);
+        heap.AddLast(item);
         traverseUp(size()-1);
     }
 
-    private void heapify(int ind) { // – can perform heapify actions starting from position ‘index’
-        int leftChild = leftChildOf(ind);
-        int rightChild = rightChildOf(ind);
-        int i = ind;
-        while(i != size()-1){
-            if(heap.get(leftChild)!=null){
-                if(heap.get(leftChild).compareTo(heap.get(i)) > 0){
-                    swap(i,leftChild);
-                    i = leftChild;
-                    leftChild = leftChildOf(i);
-                    rightChild = rightChildOf(i);
-                    continue;
-            }}
-            else if(heap.get(rightChild)!=null) {
-             if (heap.get(rightChild).compareTo(heap.get(i)) > 0) {
-                System.out.println(rightChild);
-                swap(i,rightChild);
-                i = rightChild;
-                leftChild = leftChildOf(i);
-                rightChild = rightChildOf(i);}
-                continue;
-            }
-            i++;
+    private void heapify(int i) {
+        int ind = i;
+        int l = leftChildOf(ind);
+        int r = rightChildOf(ind); //
+
+        if (size()>l){
+            if (heap.get(ind).compareTo(heap.get(l)) > 0)
+                ind = l;}
+
+        if (size()>r){
+            if (heap.get(ind).compareTo(heap.get(r)) > 0)
+                ind = r;}
+        if (ind != i) {
+            swap(i, ind);
+
+            heapify(ind);
         }
     }
-
     public void traverseUp(int ind) { // can perform traverseUp actions starting from position ‘index’
-        int parent = parentOf(ind);
-        int i = ind;
-        while(i != 0){
-            if(heap.get(parent).compareTo(heap.get(i)) > 0){
-                swap(i,parent);
-                i = parent;
-                parent = parentOf(parent);
-            }
-            else{
-                break;
-            }
+        if(ind == 0) {
+            return;
+        }
+        int p = parentOf(ind);
+        if(heap.get(ind).compareTo(heap.get(p)) < 0) {
+
+            swap(ind, p);
+            traverseUp(p);
         }
     }
 
     private int leftChildOf(int i) {
-        return 2 * i;
+        return (2 * i)+1;
     } // returns the index of the left child item
 
     private int rightChildOf(int i) {
-        return 2 * i+1;
+        return (2 * i)+2;
     } // returns the index of the right child item
 
     private int parentOf(int i) {
-        return i / 2;
+        return (i - 1)/ 2 ;
     } // returns parent
 
     private void swap(int i, int j) { // swapping elements

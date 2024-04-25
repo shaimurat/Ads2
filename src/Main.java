@@ -1,7 +1,18 @@
 public class Main {
     public static void main(String[] args) {
-        ArrayListCheck();
-        LinkedListCheck();
+        MyMinHeap<Integer> heap = new MyMinHeap<>();
+        heap.insert(6);
+        heap.insert(100);
+        heap.insert(5);
+        heap.insert(3);
+        heap.insert(2);
+        heap.insert(20);
+        heap.insert(50);
+        heap.extractMin();
+        heap.extractMin();
+        heap.extractMin();
+        heap.extractMin();
+        printArray(heap.heap);
     }
     public static void ArrayListCheck(){
         MyArrayList<Integer> arr = new MyArrayList<>();
